@@ -26,7 +26,7 @@ jobs:
 
   conditional:
     name: Check conditional workflows and jobs
-    runs-on: ubuntu-latest
+    runs-on: equinix-2cpu-8gb
     outputs:
       ci: ${{ steps.conditional.outputs.ci }}
       ci-quarkus: ${{ steps.conditional.outputs.ci-quarkus }}
@@ -53,7 +53,7 @@ jobs:
   build:
     name: Build
     if: needs.conditional.outputs.ci == 'true'
-    runs-on: ubuntu-latest
+    runs-on: equinix-2cpu-8gb
     needs: conditional
     steps:
       - uses: actions/checkout@v4
@@ -63,7 +63,7 @@ jobs:
 
   unit-tests:
     name: Base UT
-    runs-on: ubuntu-latest
+    runs-on: equinix-2cpu-8gb
     needs: build
     timeout-minutes: 30
     steps:
@@ -97,7 +97,7 @@ jobs:
   base-integration-tests:
     name: Base IT
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: equinix-2cpu-8gb
     timeout-minutes: 100
     strategy:
       matrix:
@@ -136,7 +136,7 @@ jobs:
   adapter-integration-tests:
     name: Adapter IT
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: equinix-2cpu-8gb
     timeout-minutes: 100
     steps:
       - uses: actions/checkout@v4
@@ -181,7 +181,7 @@ jobs:
     timeout-minutes: 15
     strategy:
       matrix:
-        os: [ ubuntu-latest, windows-latest ]
+        os: [ equinix-2cpu-8gb, windows-latest ]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -211,7 +211,7 @@ jobs:
     timeout-minutes: 115
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [equinix-2cpu-8gb]
         suite: [zip, container, storage, smoke]
         full-testsuite:
           - ${{ needs.conditional.outputs.ci-quarkus == 'true' }}
@@ -270,7 +270,7 @@ jobs:
     timeout-minutes: 100
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [equinix-2cpu-8gb, windows-latest]
         dist: [temurin]
         version: [17]
       fail-fast: false
@@ -319,7 +319,7 @@ jobs:
     name: Persistent Sessions IT
     needs: [build, conditional]
     if: needs.conditional.outputs.ci-store == 'true'
-    runs-on: ubuntu-latest
+    runs-on: equinix-2cpu-8gb
     timeout-minutes: 150
     strategy:
       matrix:
@@ -379,7 +379,7 @@ jobs:
     name: External Infinispan IT
     needs: [ build, conditional ]
     if: needs.conditional.outputs.ci-store == 'true'
-    runs-on: ubuntu-latest
+    runs-on: equinix-2cpu-8gb
     timeout-minutes: 150
     strategy:
       matrix:
@@ -419,7 +419,7 @@ jobs:
     name: Store IT
     needs: [build, conditional]
     if: needs.conditional.outputs.ci-store == 'true'
-    runs-on: ubuntu-latest
+    runs-on: equinix-2cpu-8gb
     timeout-minutes: 150
     strategy:
       matrix:
@@ -543,7 +543,7 @@ jobs:
 
   store-model-tests:
     name: Store Model Tests
-    runs-on: ubuntu-latest
+    runs-on: equinix-2cpu-8gb
     needs: [build, conditional]
     if: needs.conditional.outputs.ci-store == 'true'
     timeout-minutes: 75
@@ -577,7 +577,7 @@ jobs:
   clustering-integration-tests:
     name: Clustering IT
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: equinix-2cpu-8gb
     timeout-minutes: 35
     env:
       MAVEN_OPTS: -Xmx1024m
@@ -611,7 +611,7 @@ jobs:
 
   fips-unit-tests:
     name: FIPS UT
-    runs-on: ubuntu-latest
+    runs-on: equinix-2cpu-8gb
     needs: build
     timeout-minutes: 20
     steps:
@@ -643,7 +643,7 @@ jobs:
   fips-integration-tests:
     name: FIPS IT
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: equinix-2cpu-8gb
     timeout-minutes: 45
     strategy:
       matrix:
@@ -696,7 +696,7 @@ jobs:
 
   forms-integration-tests:
     name: Forms IT
-    runs-on: ubuntu-latest
+    runs-on: equinix-2cpu-8gb
     needs: build
     timeout-minutes: 75
     strategy:
@@ -736,7 +736,7 @@ jobs:
   webauthn-integration-tests:
     name: WebAuthn IT
     if: needs.conditional.outputs.ci-webauthn == 'true'
-    runs-on: ubuntu-latest
+    runs-on: equinix-2cpu-8gb
     needs: build
     timeout-minutes: 45
     strategy:
@@ -777,7 +777,7 @@ jobs:
 
   sssd-unit-tests:
     name: SSSD
-    runs-on: ubuntu-latest
+    runs-on: equinix-2cpu-8gb
     if: needs.conditional.outputs.ci-sssd == 'true'
     needs:
       - conditional
@@ -814,7 +814,7 @@ jobs:
 
   migration-tests:
     name: Migration Tests
-    runs-on: ubuntu-latest
+    runs-on: equinix-2cpu-8gb
     needs: build
     timeout-minutes: 45
     strategy:
@@ -881,7 +881,7 @@ jobs:
       - sssd-unit-tests
       - migration-tests
       - external-infinispan-tests
-    runs-on: ubuntu-latest
+    runs-on: equinix-2cpu-8gb
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/status-check
