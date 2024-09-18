@@ -13,11 +13,6 @@ env:
   SUREFIRE_RERUN_FAILING_COUNT: 2
   SUREFIRE_RETRY: "-Dsurefire.rerunFailingTestsCount=2"
 
-concurrency:
-  # Only cancel jobs for PR updates
-  group: ci-${{ github.ref }}
-  cancel-in-progress: true
-
 defaults:
   run:
     shell: bash
