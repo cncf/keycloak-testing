@@ -37,7 +37,7 @@ runs:
       if: inputs.create-cache-if-it-doesnt-exist == 'true' && steps.cache-maven-repository.outputs.cache-hit != 'true'
       shell: bash
       run: |
-        export VERSION=$(mvn help:evaluate -Dexpression=node.version -q -DforceStdout  | cut -c 2-)
+        export VERSION=$(./mvnw help:evaluate -Dexpression=node.version -q -DforceStdout  | cut -c 2-)
         curl -Lf https://nodejs.org/dist/v${VERSION}/win-x64/node.exe --create-dirs -o ~/.m2/repository/com/github/eirslett/node/${VERSION}/node-${VERSION}-win-x64.exe
 
     - shell: powershell
