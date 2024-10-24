@@ -33,7 +33,7 @@ runs:
       name: Download Keycloak Maven artifacts
       uses: actions/download-artifact@v4
       with:
-        name: m2-keycloak.tzts
+        name: m2-keycloak.tar
 
     - id: extract-maven-artifacts
       name: Extract Keycloak Maven artifacts
@@ -43,4 +43,4 @@ runs:
           # zstd binary might be missing in older versions, install only when necessary
           which zstd > /dev/null || choco install zstandard
         fi
-        tar -C ~/ --use-compress-program="zstd -d" -xf m2-keycloak.tzts
+        tar -C ~/ -xf m2-keycloak.tar
