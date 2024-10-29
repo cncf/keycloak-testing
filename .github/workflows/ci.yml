@@ -189,7 +189,7 @@ jobs:
     timeout-minutes: 15
     strategy:
       matrix:
-        os: [ ${{ needs.conditional.outputs.runner-linux }}, windows-latest ]
+        os: [ "${{ needs.conditional.outputs.runner-linux }}", windows-latest ]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -219,7 +219,7 @@ jobs:
     timeout-minutes: 115
     strategy:
       matrix:
-        os: [${{ needs.conditional.outputs.runner-linux }}]
+        os: [ "${{ needs.conditional.outputs.runner-linux }}" ]
         suite: [zip, container, storage, smoke]
         full-testsuite:
           - ${{ needs.conditional.outputs.ci-quarkus == 'true' }}
@@ -278,7 +278,7 @@ jobs:
     timeout-minutes: 100
     strategy:
       matrix:
-        os: [${{ needs.conditional.outputs.runner-linux }}, windows-latest]
+        os: ["${{ needs.conditional.outputs.runner-linux }}", windows-latest]
         dist: [temurin]
         version: [17]
       fail-fast: false
