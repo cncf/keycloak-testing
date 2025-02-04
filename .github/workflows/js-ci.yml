@@ -28,7 +28,7 @@ defaults:
 jobs:
   conditional:
     name: Check conditional workflows and jobs
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     outputs:
       js-ci: ${{ steps.conditional.outputs.js }}
     steps:
@@ -43,7 +43,7 @@ jobs:
     name: Build Keycloak
     needs: conditional
     if: needs.conditional.outputs.js-ci == 'true'
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     steps:
       - uses: actions/checkout@v4
 
@@ -64,7 +64,7 @@ jobs:
     name: Admin Client
     needs: conditional
     if: needs.conditional.outputs.js-ci == 'true'
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     env:
       WORKSPACE: "@keycloak/keycloak-admin-client"
     steps:
@@ -82,7 +82,7 @@ jobs:
     name: UI Shared
     needs: conditional
     if: needs.conditional.outputs.js-ci == 'true'
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     env:
       WORKSPACE: "@keycloak/keycloak-ui-shared"
     steps:
@@ -100,7 +100,7 @@ jobs:
     name: Account UI
     needs: conditional
     if: needs.conditional.outputs.js-ci == 'true'
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     env:
       WORKSPACE: "@keycloak/keycloak-account-ui"
     steps:
@@ -118,7 +118,7 @@ jobs:
     name: Admin UI
     needs: conditional
     if: needs.conditional.outputs.js-ci == 'true'
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     env:
       WORKSPACE: keycloak-admin-ui
     steps:
@@ -144,7 +144,7 @@ jobs:
       - conditional
       - build-keycloak
     if: needs.conditional.outputs.js-ci == 'true'
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     env:
       WORKSPACE: "@keycloak/keycloak-account-ui"
     steps:
@@ -197,7 +197,7 @@ jobs:
     needs:
       - conditional
     if: needs.conditional.outputs.js-ci == 'true'
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     outputs:
       seed: ${{ steps.generate-random-number.outputs.value }}
     steps:
@@ -214,7 +214,7 @@ jobs:
       - build-keycloak
       - generate-test-seed
     if: needs.conditional.outputs.js-ci == 'true'
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     env:
       WORKSPACE: keycloak-admin-ui
     strategy:
@@ -308,7 +308,7 @@ jobs:
       - account-ui-e2e
       - admin-ui
       - admin-ui-e2e
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/status-check

@@ -13,7 +13,7 @@ defaults:
 jobs:
   analysis:
     name: Analysis of Quarkus and Operator
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     if: github.repository == 'keycloak/keycloak'
     steps:
       - uses: actions/checkout@v4

@@ -25,7 +25,7 @@ jobs:
 
   conditional:
     name: Check conditional workflows and jobs
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     outputs:
       guides: ${{ steps.conditional.outputs.guides }}
       ci: ${{ steps.conditional.outputs.ci }}
@@ -41,7 +41,7 @@ jobs:
     name: Build
     # will only build the guides if the general CI doesn't run, which will also build the guides
     if: ${{ needs.conditional.outputs.guides == 'true' && needs.conditional.outputs.ci != 'true' }}
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     needs: conditional
     steps:
       - uses: actions/checkout@v4
@@ -55,7 +55,7 @@ jobs:
     needs:
       - conditional
       - build
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/status-check

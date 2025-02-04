@@ -27,7 +27,7 @@ jobs:
 
   conditional:
     name: Check conditional workflows and jobs
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     outputs:
       operator: ${{ steps.conditional.outputs.operator }}
     steps:
@@ -41,7 +41,7 @@ jobs:
   build:
     name: Build distribution
     if: needs.conditional.outputs.operator == 'true'
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     needs: conditional
     steps:
       - uses: actions/checkout@v4
@@ -54,7 +54,7 @@ jobs:
 
   test-local:
     name: Test local
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     needs: [build]
     steps:
       - uses: actions/checkout@v4
@@ -98,7 +98,7 @@ jobs:
 
   test-remote:
     name: Test remote
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     needs: [build]
     steps:
       - uses: actions/checkout@v4
@@ -145,7 +145,7 @@ jobs:
 
   test-olm:
     name: Test OLM installation
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     needs: [build]
     steps:
       - uses: actions/checkout@v4
@@ -236,7 +236,7 @@ jobs:
       - test-local
       - test-remote
       - test-olm
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/status-check

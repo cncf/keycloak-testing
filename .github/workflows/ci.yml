@@ -26,7 +26,7 @@ jobs:
 
   conditional:
     name: Check conditional workflows and jobs
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     outputs:
       ci: ${{ steps.conditional.outputs.ci }}
       ci-quarkus: ${{ steps.conditional.outputs.ci-quarkus }}
@@ -55,7 +55,7 @@ jobs:
   build:
     name: Build
     if: needs.conditional.outputs.ci == 'true'
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     needs: conditional
     steps:
       - uses: actions/checkout@v4
@@ -69,7 +69,7 @@ jobs:
 
   unit-tests:
     name: Base UT
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     needs: build
     timeout-minutes: 30
     steps:
@@ -103,7 +103,7 @@ jobs:
   base-integration-tests:
     name: Base IT
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     timeout-minutes: 100
     strategy:
       matrix:
@@ -142,7 +142,7 @@ jobs:
   adapter-integration-tests:
     name: Adapter IT
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
@@ -183,7 +183,7 @@ jobs:
   adapter-integration-tests-strict-cookies:
     name: Adapter IT Strict Cookies
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
@@ -228,7 +228,7 @@ jobs:
     timeout-minutes: 15
     strategy:
       matrix:
-        os: [ ubuntu-latest, windows-latest ]
+        os: [ oracle-16cpu-64gb, windows-latest ]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -258,7 +258,7 @@ jobs:
     timeout-minutes: 115
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [oracle-16cpu-64gb]
         suite: [zip-slow, zip-fast, container, storage, smoke]
         full-testsuite:
           - ${{ needs.conditional.outputs.ci-quarkus == 'true' }}
@@ -323,7 +323,7 @@ jobs:
     timeout-minutes: 100
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [oracle-16cpu-64gb, windows-latest]
         dist: [temurin]
         version: [17]
       fail-fast: false
@@ -379,7 +379,7 @@ jobs:
     name: Login Theme v1 tests
     needs: build
     timeout-minutes: 100
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     steps:
       - uses: actions/checkout@v4
 
@@ -414,7 +414,7 @@ jobs:
     name: Volatile Sessions IT
     needs: [build, conditional]
     if: needs.conditional.outputs.ci-store == 'true'
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     timeout-minutes: 150
     steps:
       - uses: actions/checkout@v4
@@ -457,7 +457,7 @@ jobs:
     name: External Infinispan IT
     needs: [ build, conditional ]
     if: needs.conditional.outputs.ci-store == 'true'
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     timeout-minutes: 150
     strategy:
       matrix:
@@ -497,7 +497,7 @@ jobs:
     name: AuroraDB IT
     needs: conditional
     if: needs.conditional.outputs.ci-aurora == 'true'
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     timeout-minutes: 150
     steps:
       - uses: actions/checkout@v4
@@ -666,7 +666,7 @@ jobs:
   store-integration-tests:
     name: Store IT
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     timeout-minutes: 75
     strategy:
       matrix:
@@ -748,7 +748,7 @@ jobs:
 
   store-model-tests:
     name: Store Model Tests
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     needs: [build, conditional]
     if: needs.conditional.outputs.ci-store == 'true'
     timeout-minutes: 75
@@ -782,7 +782,7 @@ jobs:
   clustering-integration-tests:
     name: Clustering IT
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     timeout-minutes: 35
     env:
       MAVEN_OPTS: -Xmx1024m
@@ -816,7 +816,7 @@ jobs:
 
   fips-unit-tests:
     name: FIPS UT
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     needs: build
     timeout-minutes: 20
     steps:
@@ -848,7 +848,7 @@ jobs:
   fips-integration-tests:
     name: FIPS IT
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     timeout-minutes: 45
     strategy:
       matrix:
@@ -891,7 +891,7 @@ jobs:
 
   forms-integration-tests:
     name: Forms IT
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     needs: build
     timeout-minutes: 75
     strategy:
@@ -931,7 +931,7 @@ jobs:
   webauthn-integration-tests:
     name: WebAuthn IT
     if: needs.conditional.outputs.ci-webauthn == 'true'
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     needs: build
     timeout-minutes: 45
     strategy:
@@ -972,7 +972,7 @@ jobs:
 
   sssd-unit-tests:
     name: SSSD
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     if: needs.conditional.outputs.ci-sssd == 'true'
     needs:
       - conditional
@@ -1009,7 +1009,7 @@ jobs:
 
   migration-tests:
     name: Migration Tests
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     needs: build
     timeout-minutes: 45
     strategy:
@@ -1056,7 +1056,7 @@ jobs:
 
   test-framework:
     name: Test Framework
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     needs: build
     timeout-minutes: 30
     steps:
@@ -1071,7 +1071,7 @@ jobs:
 
   base-new-integration-tests:
     name: Base IT (new)
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     needs:
       - build
     timeout-minutes: 30
@@ -1111,7 +1111,7 @@ jobs:
       - external-infinispan-tests
       - test-framework
       - base-new-integration-tests
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/status-check

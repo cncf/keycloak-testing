@@ -26,7 +26,7 @@ jobs:
 
   conditional:
     name: Check conditional workflows and jobs
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     outputs:
       java: ${{ steps.conditional.outputs.codeql-java }}
       javascript: ${{ steps.conditional.outputs.codeql-javascript }}
@@ -42,7 +42,7 @@ jobs:
   java:
     name: CodeQL Java
     needs: conditional
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     if: needs.conditional.outputs.java == 'true'
     outputs:
       conclusion: ${{ steps.check.outputs.conclusion }}
@@ -68,7 +68,7 @@ jobs:
   javascript:
     name: CodeQL JavaScript
     needs: conditional
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     if: needs.conditional.outputs.javascript == 'true'
     outputs:
       conclusion: ${{ steps.check.outputs.conclusion }}
@@ -93,7 +93,7 @@ jobs:
   typescript:
     name: CodeQL TypeScript
     needs: conditional
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     if: needs.conditional.outputs.typescript == 'true'
     outputs:
       conclusion: ${{ steps.check.outputs.conclusion }}
@@ -123,7 +123,7 @@ jobs:
       - java
       - javascript
       - typescript
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/status-check

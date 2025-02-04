@@ -18,7 +18,7 @@ jobs:
   update-quarkus-next-branch:
     name: Update quarkus-next branch
     if: github.event_name != 'schedule' || github.repository == 'keycloak/keycloak'
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
 
     steps:
       - uses: actions/checkout@v4
@@ -41,7 +41,7 @@ jobs:
 
   run-matrix-with-quarkus-next:
     name: Run workflow matrix with the quarkus-next branch
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     needs:
       - update-quarkus-next-branch
 

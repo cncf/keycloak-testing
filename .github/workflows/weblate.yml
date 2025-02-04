@@ -25,7 +25,7 @@ concurrency:
 jobs:
   update-weblate:
     name: Trigger Weblate to pull the latest changes
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
 
     steps:
       # language=bash

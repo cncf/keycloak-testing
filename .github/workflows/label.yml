@@ -6,7 +6,7 @@ on:
 jobs:
   label:
 
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     permissions:
       contents: read
       issues: write

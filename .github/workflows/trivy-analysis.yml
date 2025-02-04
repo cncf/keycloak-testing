@@ -11,7 +11,7 @@ jobs:
 
   analysis:
     name: Vulnerability scanner for nightly containers
-    runs-on: ubuntu-latest
+    runs-on: oracle-16cpu-64gb
     if: github.repository == 'keycloak/keycloak'
     strategy:
       matrix:
