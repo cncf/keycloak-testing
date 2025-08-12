@@ -11,6 +11,7 @@ on:
 
 env:
   MAVEN_ARGS: "-B -nsu -Daether.connector.http.connectionMaxTtl=25"
+  RETRY_COUNT: 3
 
 concurrency:
   # Only cancel jobs for PR updates
@@ -27,7 +28,7 @@ permissions:
 jobs:
   conditional:
     name: Check conditional workflows and jobs
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
     outputs:
       js-ci: ${{ steps.conditional.outputs.js }}
     permissions:
@@ -45,7 +46,7 @@ jobs:
     name: Build Keycloak
     needs: conditional
     if: needs.conditional.outputs.js-ci == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
@@ -66,7 +67,7 @@ jobs:
     name: Admin Client
     needs: conditional
     if: needs.conditional.outputs.js-ci == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
     env:
       WORKSPACE: "@keycloak/keycloak-admin-client"
     steps:
@@ -84,7 +85,7 @@ jobs:
     name: UI Shared
     needs: conditional
     if: needs.conditional.outputs.js-ci == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
     env:
       WORKSPACE: "@keycloak/keycloak-ui-shared"
     steps:
@@ -102,7 +103,7 @@ jobs:
     name: Account UI
     needs: conditional
     if: needs.conditional.outputs.js-ci == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
     env:
       WORKSPACE: "@keycloak/keycloak-account-ui"
     steps:
@@ -120,7 +121,7 @@ jobs:
     name: Admin UI
     needs: conditional
     if: needs.conditional.outputs.js-ci == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
     env:
       WORKSPACE: keycloak-admin-ui
     steps:
@@ -143,7 +144,7 @@ jobs:
       - conditional
       - build-keycloak
     if: needs.conditional.outputs.js-ci == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
     env:
       WORKSPACE: "@keycloak/keycloak-account-ui"
     strategy:
@@ -203,7 +204,7 @@ jobs:
       - conditional
       - build-keycloak
     if: needs.conditional.outputs.js-ci == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
     env:
       WORKSPACE: "@keycloak/keycloak-admin-ui"
       RETRY_COUNT: 3
@@ -272,7 +273,7 @@ jobs:
       - account-ui-e2e
       - admin-ui
       - admin-ui-e2e
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - uses: ./.github/actions/status-check

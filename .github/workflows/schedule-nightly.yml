@@ -11,7 +11,7 @@ permissions:
 jobs:
   setup:
     if: github.event_name != 'schedule' || github.repository == 'keycloak/keycloak'
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
     permissions:
       actions: write # Required to trigger workflows using gh
     outputs:
@@ -27,7 +27,7 @@ jobs:
 
   run-default-branch:
     name: Run default branch
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
     permissions:
       actions: write # Required to trigger workflows using gh
     needs: setup
@@ -51,7 +51,7 @@ jobs:
   run-latest-release-branch:
     name: Run latest release branch
     needs: setup
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
     permissions:
       actions: write # Required to trigger workflows using gh
     strategy:

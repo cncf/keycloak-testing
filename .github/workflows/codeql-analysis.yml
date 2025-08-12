@@ -28,7 +28,7 @@ permissions:
 jobs:
   conditional:
     name: Check conditional workflows and jobs
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
     outputs:
       java: ${{ steps.conditional.outputs.codeql-java }}
       javascript: ${{ steps.conditional.outputs.codeql-javascript }}
@@ -47,7 +47,7 @@ jobs:
   java:
     name: CodeQL Java
     needs: conditional
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
     permissions:
       security-events: write  # Required for SARIF upload
     if: needs.conditional.outputs.java == 'true'
@@ -75,7 +75,7 @@ jobs:
   javascript:
     name: CodeQL JavaScript
     needs: conditional
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
     permissions:
       security-events: write  # Required for SARIF upload
     if: needs.conditional.outputs.javascript == 'true'
@@ -102,7 +102,7 @@ jobs:
   typescript:
     name: CodeQL TypeScript
     needs: conditional
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
     permissions:
       security-events: write  # Required for SARIF upload
     if: needs.conditional.outputs.typescript == 'true'
@@ -134,7 +134,7 @@ jobs:
       - java
       - javascript
       - typescript
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - uses: ./.github/actions/status-check

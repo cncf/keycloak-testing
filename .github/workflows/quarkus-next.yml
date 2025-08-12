@@ -21,7 +21,7 @@ jobs:
   update-quarkus-next-branch:
     name: Update quarkus-next branch
     if: github.event_name != 'schedule' || github.repository == 'keycloak/keycloak'
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
     permissions:
       contents: write # Required to push changes to the repository
     steps:
@@ -45,7 +45,7 @@ jobs:
 
   run-matrix-with-quarkus-next:
     name: Run workflow matrix with the quarkus-next branch
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
     permissions:
       actions: write # Required to trigger workflows using gh
     needs:

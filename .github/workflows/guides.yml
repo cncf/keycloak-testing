@@ -28,7 +28,7 @@ jobs:
 
   conditional:
     name: Check conditional workflows and jobs
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
     outputs:
       guides: ${{ steps.conditional.outputs.guides }}
       ci: ${{ steps.conditional.outputs.ci }}
@@ -47,7 +47,7 @@ jobs:
     name: Build
     # will only build the guides if the general CI doesn't run, which will also build the guides
     if: ${{ needs.conditional.outputs.guides == 'true' && needs.conditional.outputs.ci != 'true' }}
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
     needs: conditional
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -61,7 +61,7 @@ jobs:
     needs:
       - conditional
       - build
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - uses: ./.github/actions/status-check

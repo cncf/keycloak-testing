@@ -14,7 +14,7 @@ jobs:
 
   analysis:
     name: Vulnerability scanner for nightly containers
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
     if: github.repository == 'keycloak/keycloak'
     strategy:
       matrix:
